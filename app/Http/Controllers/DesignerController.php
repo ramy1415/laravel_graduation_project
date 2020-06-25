@@ -101,7 +101,7 @@ class DesignerController extends Controller
         else{
             $prev_images = null;
         }            
-        return view('designer.profile',['designer'=>$designer,'user'=>$user,'vote_exist'=>$vote_exist,'design_count'=>$current_designs,'featured_images'=>$fimage_array,'current_images'=>$cimage_array,'likes'=>$likes_count,'about'=>$about,'prev_img'=>$prev_images,'prev_count'=>$prev_work_count,'designs'=>$designs]);       
+        return view('designer.show',['designer'=>$designer[0],'user'=>$user,'vote_exist'=>$vote_exist,'design_count'=>$current_designs,'featured_images'=>$fimage_array,'current_images'=>$cimage_array,'likes'=>$likes_count,'about'=>$about,'prev_img'=>$prev_images,'prev_count'=>$prev_work_count,'designs'=>$designs]);       
     }    
     /**
      * Remove the specified resource from storage.
