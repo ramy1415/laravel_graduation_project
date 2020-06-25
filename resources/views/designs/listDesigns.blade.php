@@ -1,5 +1,5 @@
-			<div class="designs">
-				<div class="col-lg-12 mb-2 row ">
+			<div class="designs col-lg-12 mb-2">
+				<div class=" row ">
 						@forelse($desings as $design)
 						<div class="col-lg-4 col-sm-6">
 							<div class="product-item">
