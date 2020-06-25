@@ -32,8 +32,17 @@
     <div class="d-flex flex-column">
 
       <div class="profile">
-        <img src="{{ asset('designerProfile/img/profile-img.jpg') }}" alt="" class="img-fluid rounded-circle">
-        <h1 class="text-light"><a href="index.html">{{$designer->name}}</a></h1>
+        <img src="{{asset ('storage/'.$designer->image) }}" alt="" class="img-fluid rounded-circle">
+        <h1 class="text-light">{{$designer->name}}
+           @if($vote_exist->count() > 0)
+              <i class="flaticon-heart text-danger" value="{{$designer->id}}"></i>
+            @else
+                @if($designer->id != Auth::id())
+                  <i class="flaticon-heart text-dark" value="{{$designer->id}}"></i>
+                @endif
+            @endif
+        </h1>
+        <div class="info-label" data-toggle="tooltip" title="" data-original-title="You currently have 290 Reward Points to spend" style="color: white;margin-left: 50px;"><i class="icon-medal" ></i>{{$likes}} Followers</div>
       </div>
 
       <nav class="nav-menu">
