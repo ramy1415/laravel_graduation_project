@@ -65,7 +65,7 @@ Route::resource('user','AllUsersUpdateController')->only([
     'update','edit'
 ]);
 Route::post('/featuredesign','DesignerController@featuredesign')->name('featuredesign');
-Route::post('/deletefeaturedesign','DesignerController@featuredesign')->name('deletefeaturedesign');
+Route::post('/deletefeaturedesign','DesignerController@deletefeaturedesign')->name('deletefeaturedesign');
 // Route::get('/featuredesign/{design}','DesignerController@featuredesign')->name('featuredesign');
 Route::post('savelikes', 'DesignerController@savelikes')->name('savelikes');
 Route::resource('designer', 'DesignerController')->except([
@@ -117,3 +117,4 @@ Route::resource('user','ProfileController')->only([
 
     });
 });
+Route::view('/about', 'about');

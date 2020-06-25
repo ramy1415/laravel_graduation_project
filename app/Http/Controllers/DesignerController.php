@@ -76,31 +76,34 @@ class DesignerController extends Controller
         foreach($designs as $design)
         {
             $design_image = DesignImage::where('design_id',$design->id)->get();
-        array_push($cimage_array, $design_image[0]); 
+            array_push($cimage_array, $design_image[0]); 
         }
         $featured_designs = Design::where(['designer_id'=>$id,'featured'=>1])->get();
         $fimage_array=[];
         foreach($featured_designs as $design)
         {
             $featured_image = DesignImage::where('design_id',$design->id)->get();
-        array_push($fimage_array, $featured_image[0]); 
+            array_push($fimage_array, $featured_image[0]); 
         }
         $prev_works = Design::where(['designer_id'=>$id,'state'=>'sold'])->get();
         $prev_work_count = $prev_works->count();
             //var_dump($prev_works);
         if($prev_work_count > 0 )
         {
+            $pimage_array=[];
             foreach($prev_works as $prev_work)
-            {
+            {   
                 $prev_images = CompanyDesign::where('design_id',$prev_work->id)->get();
-
+                foreach($prev_images as $prev_image)
+                {
+                    array_push($pimage_array, $prev_image['image']); 
+                }
             }
-            //var_dump($prev_images);
         }
         else{
             $prev_images = null;
         }            
-        return view('designer.profile',['designer'=>$designer,'user'=>$user,'vote_exist'=>$vote_exist,'design_count'=>$current_designs,'featured_images'=>$fimage_array,'current_images'=>$cimage_array,'likes'=>$likes_count,'about'=>$about,'prev_img'=>$prev_images,'prev_count'=>$prev_work_count,'designs'=>$designs]);       
+        return view('designer.profile',['designer'=>$designer,'user'=>$user,'vote_exist'=>$vote_exist,'design_count'=>$current_designs,'featured_images'=>$fimage_array,'current_images'=>$cimage_array,'likes'=>$likes_count,'about'=>$about,'prev_img'=>$pimage_array,'prev_count'=>$prev_work_count,'designs'=>$designs]);       
     }    
     /**
      * Remove the specified resource from storage.
@@ -148,11 +151,14 @@ class DesignerController extends Controller
     public function featuredesign(Request $request)
     {
         $specific_design = Design::find($request->get('id'));
-        if ($specific_design->featured == 0)
+        if( Design::where(['designer_id'=>$specific_design->designer_id,'featured'=>1])->count() < 4 )
         {
-            $specific_design->featured = 1;
-            $specific_design->save();
-            $feature = 1;
+            if ($specific_design->featured == 0)
+            { 
+                $specific_design->featured = 1;
+                $specific_design->save();
+                $feature = 1;
+            }
         }
         $featured_image = DesignImage::where('design_id',$specific_design->id)->first();
 
@@ -161,12 +167,16 @@ class DesignerController extends Controller
         
     }
     public function deletefeaturedesign(Request $request)
-    {
-        $unfeatured_design = Design::find($request->get('id'));      
-        $unfeatured_design->featured = 0;
-        $unfeatured_design->save();
-        $feature = 0;
-        return response()->json(['success'=>'Got Simple Ajax Request','k'=>$unfeatured_design,'unfeatured_design'=>$unfeatured_design,'feature'=>$feature]);
+    {   
+        $specific_design = Design::find($request->get('id'));
+        
+        if ($specific_design->featured == 1)
+        {
+            $specific_design->featured = 0;
+            $specific_design->save();
+            $feature = 0;
+        }
+        return response()->json(['success'=>'Got Simple Ajax Request','feature'=>$feature]);
 
     }
 }

@@ -271,16 +271,14 @@ $(window).on('load', function() {
 				console.log("success");
 				console.log(data.design_image);	
 				console.log(event.target);
-				$('#'+design_id).hide();
+				$(event.target).hide();
+				// $('.featured#'+design_id).hide();
 				console.log(design_id);
 				$('#featuresection').append(`<div class="col-lg-3 col-sm-6">
 				<div class="product-item" >
-				$(this).wrap("<a href='" + this.src + "'/>");
-				<img style="width:250px;height:300px;" src="/storage/${data.design_image.image}" alt="">
+				<img style="width:250px;height:300px;"id ="${design_id}" class='featured_image' src="/storage/${data.design_image.image}" alt="">
 				</div>
-				<a href="#">
-							<span class="glyphicon glyphicon-trash"></span>
-						  </a>
+					<span class="glyphicon glyphicon-trash" id ="${design_id}"></span>
 				</div>	
 			 	`)
 
@@ -295,9 +293,7 @@ $(window).on('load', function() {
 	$(".glyphicon-trash").on("click", function (event){
 		event.preventDefault();
 		let design_id = event.target.id;
-		console.log(":::::::::::");
 		console.log(design_id);
-		
 		$.ajaxSetup({
 			headers: {
 			  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -311,8 +307,12 @@ $(window).on('load', function() {
 				console.log("success");
 				console.log(data);	
 				console.log(event.target);
-				$('.glyphicon-trash#'+design_id ).hide();
-				console.log(design_id);
+				$('.featured_image#'+design_id ).parent().parent().hide();
+				$('.current#'+design_id).append(`
+				<button class="btn btn-info featured" id="${design_id}">Add as a Featured</button>
+				`)
+				
+				
 			},
 			error:function(data){
 				console.log("error");

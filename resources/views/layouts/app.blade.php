@@ -63,7 +63,10 @@
     @endif
     @yield('styles')
      
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
 </head>
 <body>
@@ -135,9 +138,9 @@
                                 @if( $user->role == "designer")
                                 <div style="display: inline;margin-right: 20px;"> 
                                 <a href="{{ route('designer.show',['designer'=>$user->id]) }}" style="color: black;"> Profile</a>
-                                <button type="button" class="badge badge-dark p-2 mb-5">
+                                {{-- <button type="button" class="badge badge-dark p-2 mb-5">
                                     Balance <span class="badge badge-light">{{Auth::user()->balance->balance}}</span>
-                                </button>
+                                </button> --}}
                                 </div>
                                 @elseif($user->role == "company")
                                 <div style="display: inline;margin-right: 20px;"> 
@@ -220,7 +223,7 @@
                             <li><a href="/design/category/teenagers">Teenagers</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">How it works</a></li>
+                    <li><a href="/about">How it works</a></li>
                    <!--  <li><a href="#">Shoes</a>
                         <ul class="sub-menu">
                             <li><a href="#">Sneakers</a></li>

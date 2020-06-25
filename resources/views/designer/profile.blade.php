@@ -107,10 +107,10 @@
 				@foreach($featured_images as $fimage)
 					<div class="col-lg-3 col-sm-6">
 						<div class="product-item" >
-							<a href="{{route('design.show', ['design'=>$fimage->design_id])}}"><img style="width:250px;height:300px;" src="{{asset ('storage/'.$fimage->image) }}" alt=""></a>
+							<a href="{{route('design.show', ['design'=>$fimage->design_id])}}"><img style="width:250px;height:300px;"class='featured_image' id ='{{$fimage->design->id}}' src="{{asset ('storage/'.$fimage->image) }}" alt=""></a>
 							@can('update',$designer_data)
-								@if($user->role == "designer"&& $fimage->design->featured )
-								<span class="glyphicon glyphicon-trash"id="{{$fimage->design_id}}"></span>
+								@if($user->role == "designer" && $fimage->design->featured )
+								<span class="glyphicon glyphicon-trash" id ="{{$fimage->design->id}}"></span>
 								@endif
 							@endcan
 						</div>
@@ -131,18 +131,14 @@
 			<div class="product-slider owl-carousel">
 				{{-- @foreach($designs as $design) --}}
 			@foreach($current_images as $cimage)
-						<div class="product-item">
-						<div class="pi-pic">
-							<a href="{{route('design.show', ['design' => $cimage->design_id])}}"><img style="width:250px;height:300px;"src="{{asset ('storage/'.$cimage->image) }}" alt=""></a>
+						<div class="product-item " >
+						<div class="pi-pic current"id="{{$cimage->design_id}}">
+							<a href="{{route('design.show', ['design' => $cimage->design_id])}}"><img class="current_designs"id="{{$cimage->design_id}}" style="width:250px;height:300px;"src="{{asset ('storage/'.$cimage->image) }}" alt=""></a>
 						</div>
 						</br>
 						@can('update',$designer_data)
-						@if($user->role == "designer"&& ! $cimage->design->featured )
-						{{-- <a  href="{{ route('featuredesign',$cimage->design_id) }}" class="btn btn-info featured">Add as a Featured</a> --}}
-						<button class="btn btn-info featured" id="{{$cimage->design_id}}">Add as a Featured</button>
-								{{-- @else
-									<button type="button" class="btn btn-danger"value="{{$cimage->design_id}}">x</button>
-								@endif --}}			
+						@if($user->role == "designer" && ! $cimage->design->featured )
+						<button class="btn btn-info featured" id="{{$cimage->design_id}}">Add as a Featured</button>									
 						@endif
 						@endcan
 					</div>			
@@ -164,7 +160,7 @@
             @foreach($prev_img as $pimage)
 				<div class="product-item">
 					<div class="pi-pic">
-						<img style="height:300px;width:250px;"src="{{asset ('storage/'.$pimage->image) }}" alt="">
+						<img style="height:300px;width:250px;"src="{{asset ('storage/'.$pimage) }}" alt="">
 					</div>
 					</br>
 				</div>
