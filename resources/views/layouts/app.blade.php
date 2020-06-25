@@ -36,15 +36,17 @@
     <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/animate.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}"/>
-            {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> --}}
+            
     <style type="text/css">
         #Notifications::after {
             content: none;
         }
         .hideNotification{
             display: none;
+        }
+        .notify
+        {
+            background-color:lightgray;
         }
     </style>
 
@@ -77,14 +79,16 @@
                 <strong>Your email is not verified yet please check your email</strong>
             </div>
             @endif
-            @if (Auth::user()->profile->is_verified != 'accepted')
+
+            @if ((Auth::user()->profile) && (Auth::user()->profile->is_verified != 'accepted'))
             <div class="alert alert-success" role="alert">
             <strong>Your profile is not accepted yet !</strong>
             </div>
             @endif
+
         @endauth
         <!-- Header section -->
-    <header class="header-section">
+    <header class="header-section sticky-top" style="background-color: white;">
         <div class="header-top">
             <div class="container">
                 <div class="row">
@@ -103,6 +107,7 @@
                     <div class="col-xl-4 col-lg-5">
                         <div class="user-panel">
                             @auth
+                                @if(Auth::user()->role != "company")
                                 <div class="up-item notifications" >
                                         <a id="Notifications" class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="MarkAsRead()"> <i class="fa fa-globe" aria-hidden="true"></i>
                                         </a>
@@ -113,13 +118,16 @@
                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="Notifications" id="notificationList">                                           
                                            
                                             @if( Auth::user()->role == "designer") 
-                                                @foreach (Auth::user()->unreadNotifications as $notification)
-                                                @if($notification->type === "App\\Notifications\\designerNotifications")
-                                                <a class="dropdown-item" href="{{ route('design.show',['design'=>$notification->data['design']['id']]) }}">
-                                                  {{$notification->data['company']}} has bought your {{ $notification->data['design']['title'] }} design
-                                                </a>
-                                                @endif
-                                            @endforeach 
+                                                @forelse (Auth::user()->unreadNotifications as $notification)
+                                                    @if($notification->type === "App\\Notifications\\designerNotifications")
+                                                    <a class="dropdown-item notify" href="{{ route('design.show',['design'=>$notification->data['design']['id']]) }}">
+                                                      {{$notification->data['company']}} has bought your {{ $notification->data['design']['title'] }} design
+                                                    </a>
+
+                                                    @endif
+                                                @empty
+                                                    <div class="alert alert-danger noNotification" style="width: 250px;height: 40px;">No unread notifications</div>
+                                                @endforelse
                                             @elseif(Auth::user()->role == "user")
                                             @foreach (Auth::user()->unreadNotifications as $notification)
                                                 @if($notification->type === "App\\Notifications\\UserNotifications")
@@ -135,10 +143,12 @@
                                             @endif
                                         </div>
                                 </div>
+                                @endif
                                 @if( $user->role == "designer")
                                 <div style="display: inline;margin-right: 20px;"> 
                                 <a href="{{ route('designer.show',['designer'=>$user->id]) }}" style="color: black;"> Profile</a>
-                                {{-- <button type="button" class="badge badge-dark p-2 mb-5">
+
+                               {{-- <button type="button" class="badge badge-dark p-2 mb-5">
                                     Balance <span class="badge badge-light">{{Auth::user()->balance->balance}}</span>
                                 </button> --}}
                                 </div>
@@ -223,26 +233,7 @@
                             <li><a href="/design/category/teenagers">Teenagers</a></li>
                         </ul>
                     </li>
-                    <li><a href="/about">How it works</a></li>
-                   <!--  <li><a href="#">Shoes</a>
-                        <ul class="sub-menu">
-                            <li><a href="#">Sneakers</a></li>
-                            <li><a href="#">Sandals</a></li>
-                            <li><a href="#">Formal Shoes</a></li>
-                            <li><a href="#">Boots</a></li>
-                            <li><a href="#">Flip Flops</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Pages</a>
-                        <ul class="sub-menu">
-                            <li><a href="./product.html">Product Page</a></li>
-                            <li><a href="./category.html">Category Page</a></li>
-                            <li><a href="./cart.html">Cart Page</a></li>
-                            <li><a href="./checkout.html">Checkout Page</a></li>
-                            <li><a href="./contact.html">Contact Page</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Blog</a></li> -->
+                    <li><a href="#">How it works</a></li>
                 </ul>
             </div>
         </nav>
@@ -297,7 +288,6 @@
     <script>
         function MarkAsRead()
             {
-                console.log("hi");
                 count=$('#count').val();
                 if(count>0)
                 {
@@ -324,25 +314,35 @@
                     $('#Notification-count').html(count);
                     $('#count').val(count);
                     $('#Notification-count').removeClass("hideNotification");
-                    if(notification['type'] === 'App\\Notifications\\designerNotifications')
-                    {
-                    $('#notificationList').append(`
-                        <a class="dropdown-item" href="/design/${notification['design']['id']}" >
-                                                ${notification['company']} has bought your ${notification['design']['title']} design
-                                                </a>
-                        `);
-                    }
+
+                if(notification['type'] === 'App\\Notifications\\designerNotifications')
+                {
+                   if($('#notificationList .noNotification'))
+                   {
+                    $('#notificationList .noNotification').remove();
+                   }
+
+                   $('#notificationList a').each(function() {
+                      $( this ).removeClass( "notify" );
+                    });
+
+                   $('#notificationList').prepend(`
+                    <a class="dropdown-item notify" href="/design/${notification['design']['id']}" >
+                                              ${notification['company']} has bought your ${notification['design']['title']} design
+                                            </a>
+                    `);
+                }
                     else if(notification['type'] === 'App\\Notifications\\UserNotifications')
                     {
-                            $('#notificationList').append(`
-                            <a class="dropdown-item" href="/design/${notification['design_id']}">
+                            $('#notificationList').prepend(`
+                            <a class="dropdown-item" href="/design/${notification['design_id']}" style="background-color:lightgray">
                             ${notification['designer']['name']} has just added a new design ${notification['design']['title']}
                             </a>
                             `);
                     }
                     else if(notification['type'] === 'App\\Notifications\\CompanyUserNotifications')
                     {
-                            $('#notificationList').append(`
+                            $('#notificationList').prepend(`
                             <a class="dropdown-item" href="${notification['product_link']}">
                             ${notification['company']} converted your lovely design into an amazing product ${notification['design']['title']}
                             </a>

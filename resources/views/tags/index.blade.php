@@ -10,7 +10,7 @@
 @endif
 @if (session()->has("deleted"))
 <div class="alert alert-warning" role="alert">
-    <strong>Success</strong> {{session()->get("deleted")}}
+    {{session()->get("deleted")}}
   </div>
 @endif
 <!-- Page Heading -->
@@ -57,6 +57,7 @@
             @endforeach
         </tbody>
     </table>
+    {{ $tags->links() }}
 </div>
 
 @endsection

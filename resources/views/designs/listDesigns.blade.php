@@ -1,4 +1,5 @@
-				<div class="col-lg-12 mb-2 row designs">
+			<div class="designs col-lg-12 mb-2">
+				<div class=" row ">
 						@forelse($desings as $design)
 						<div class="col-lg-4 col-sm-6">
 							<div class="product-item">
@@ -25,8 +26,11 @@
 									@if((Auth::user())&&(Auth::user()->role != "user"))
 									<h6>&dollar;{{$design->price}}</h6>
 									@endif
-									<h5>{{$design->title}}</h5>
-									<p>By {{$design->designer->name}}</p>
+									<a href="{{route('design.show', ['design' => $design->id])}}"><h5>{{$design->title}}</h5></a>
+									<div class="designer-name">
+									<i style="font-style: italic;">By</i> 
+									<a href="{{route('designer.show', ['designer' => $design->designer->id])}}" class="designer">{{$design->designer->name}}</a>
+									</div>
 								</div>
 
 							</div>
@@ -38,4 +42,5 @@
 
 					<div class="row">
 							 {!! $desings->links() !!}  
-					</div>
+					</div>	
+			</div>

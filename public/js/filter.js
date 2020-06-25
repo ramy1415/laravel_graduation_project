@@ -11,16 +11,58 @@
                         return $(this).text();
 
                     });
-					console.log(tagSelected[0]);
+					if($('.filterTags').children('.tags')[0])
+					{
+						$('.filterTags').children('.tags').html(`${tagSelected[0]}<i class="close fa fa-times"></i>`);
+					}
+					else
+					{
+						$('.filterTags').append(`<span class="badge badge-pill badge-light tags" style="size: 200px" onclick="deleteFilters('tags',this)">
+						${tagSelected[0]}<i class="close fa fa-times" ></i>
+						</span>`);
+					}
 					getValues();
 			      }	    
 		});
+		function deleteFilters(filter,sp)
+		{
+			if(filter == 'tags')
+			{
+				console.log(filter);	
+				console.log($('#tags .ui-selected'));
+				$('#tags .ui-selected').removeClass('ui-selected');
+				tagSelected="";
+			}
+			else if(filter == 'materials')
+			{
+				$('#materials .ui-selected').removeClass('ui-selected');
+				materialSelected="";
+			}
+			else if(filter == 'categories')
+			{
+				$('#selectable .ui-selected').removeClass('ui-selected');
+				domselected="";
+			}
+			sp.remove();
+			getValues();
+		}
+
 		$( "#materials" ).selectable({
 		    	 stop: function() {
 			        materialSelected = $("#materials .ui-selected").map(function() {
                         return $(this).text();
                     });
 					console.log(materialSelected[0]);
+					if($('.filterTags').children('.materials')[0])
+					{
+						$('.filterTags').children('.materials').html(`${materialSelected[0]}<i class="close fa fa-times"></i>`);
+					}
+					else
+					{
+						$('.filterTags').append(`<span class="badge badge-pill badge-light materials" style="size: 200px" onclick="deleteFilters('materials',this)">
+						${materialSelected[0]}<i class="close fa fa-times" ></i>
+						</span>`);
+					}
 					getValues();
 			      }	    
 		});
@@ -32,12 +74,23 @@
 
                     });
 					console.log(domselected[0]);
+					if($('.filterTags').children('.categories')[0])
+					{
+						$('.filterTags').children('.categories').html(`${domselected[0]}<i class="close fa fa-times"></i>`);
+					}
+					else
+					{
+						$('.filterTags').append(`<span class="badge badge-pill badge-light categories" style="size: 200px" onclick="deleteFilters('categories',this)">
+						${domselected[0]}<i class="close fa fa-times" ></i>
+						</span>`);
+					}
 					getValues();
 			      }	    
 		});
 		$( ".filter" ).selectmenu({
 	      change: function( event, data ) {
 	      filters=data.item.value;
+	      
 	      getValues();
 	       console.log(data.item.value);
 	      }
@@ -47,84 +100,41 @@
 	    // 	// getValues();
 	    // 	console.log(tag);
 	    // });
-		function getValues(){
+		function getValues(page){
 				let category = domselected[0];
 				let min=$('#minamount').val();
 				let max=$('#maxamount').val();
 				let tag=tagSelected[0];
 				let material=materialSelected[0];
 				let filterType=filters;
-				// let tag=
-				console.log(tag);
-				console.log(category);
-				console.log(min);
-				console.log(tag);
+				let url='http://localhost:8000/designs/?min='+min+'&max='+max;
+				if(category)
+				{
+					url+='&category='+category;
+				}
+				if(tag)
+				{
+					url+='&tag='+tag;
+				}
+				if(material)
+				{
+					url+='&material='+material;
+				}
+				if(filterType)
+				{
+					url+='&filterType='+filterType;
+				}
 				$.ajaxSetup({
 			        headers: {
 			          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			        }
 			      });
 				$.ajax({
-		        type: 'POST',
-		        url: 'http://localhost:8000/design/filterBy',
-		        data: {
-		            'category':category,
-		            'minPrice':min,
-		            'maxPrice':max,
-		            'filterType':filterType,
-		            'tag':tag,
-		            'material':material
-
-		        },
+		        type: 'GET',
+		        url: url+'&filtered=' + page,
 		        success: function (data) {
-		            console.log(data);
-		            console.log(data.user_exist);
-		            console.log(data.user_role);
-		            console.log(data.tag);
-		            let designs=data.designs;
-		            let product="";
-		            $('.designs').html("");
-		            designs.forEach((element) => {
-		            	$('.designs').append(`
-		            	<div class="col-lg-4 col-sm-6">
-							<div class="product-item">
-								<div class="pi-pic">
-									${ element.state != "sketch" ? '<div class="tag-sale">Sold</div>' : ''}
-									<a href="design/${element.id}">
-										<img src="/storage/${element.image}" alt="Design Image" id="designImage">
-									</a>
-									
-									<div class="pi-links">
-										${data.user_exist && data.user_role == "company" && element.state == "sketch" ? 
-										`<div class="pi-links">
-											<a href="javascript:void(0)" data-id="${element.id}" class="add-card">
-											<i class="flaticon-bag"></i><span>ADD TO CART</span>
-											</a>
-										</div>`
-										:''}
-										${data.user_exist && data.user_role == "user" && element.state == "sketch" ?
-										 `<a href="design/${element.id}" class="wishlist-btn">
-										 <i class="flaticon-heart"></i>
-										 </a>`
-										 :''}
-									</div>
-								</div>
-								<div class="pi-text">
-									${data.user_exist && data.user_role != "user" ?
-									 `<h6>&dollar;${element.price} </h6>`:''}
-									
-									<a href="design/${element.id}"><h5>${element.title} </h5></a>
-									<div class="designer-name">
-									<i style="font-style: italic;">By</i> 
-									<a href="/designer/${element.designer.id}" class="designer">${element.designer.name}</a>
-									</div>
-					
-								</div>
-
-							</div>
-						</div>
-		            		`);
-		            });
+		            // console.log(data);
+		            $('.designs').html(data);
 		        },
 		        error: function (XMLHttpRequest) {
 		        }
@@ -148,4 +158,17 @@
 			$("#materials li").click(function() {
 			  $(this).addClass("selected");
 			});
+
+	        $(document).on('click', '.pagination a', function(e) {
+	        	if($(this).attr('href').split('filtered=')[1])
+	        	{
+	        		console.log($(this).attr('href').split('filtered=')[1]);
+		        	let page=$(this).attr('href').split('filtered=')[1];
+		        	getValues(page);
+		            e.preventDefault();
+	        	}
+
+	        	
+	        });
+
 		});

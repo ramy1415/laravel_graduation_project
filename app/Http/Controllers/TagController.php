@@ -15,7 +15,7 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = Tag::all();
+        $tags = Tag::paginate(10);
         return view('tags.index',compact('tags'));
     }
 
@@ -90,7 +90,10 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
+        if(count($tag->designs)){
+            return redirect('admin/tag')->with('deleted',"Can't delete this because it has been added to a design");
+        }
         $tag->delete();
-        return redirect('admin/tag')->with('deleted','tag has been deleted successfully :(');
+        return redirect('admin/tag')->with('deleted','Tag has been deleted successfully :(');
     }
 }

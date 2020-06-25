@@ -13,7 +13,7 @@
                             <p>Are you trying to find a suitable clothes matches your taste, we can help you with than just click the vote button to see our designs gallary and vote for your favourite ones to put it under radar for fashion copmanies to make a production line for it. </p>
                             @if (Auth::guest())
                                 <a href="{{ route('login')}}" class="site-btn sb-white">VOTE NOW</a>
-                            @else
+                            @elseif($role == 'user')
                                 <a href="{{ route('design.index')}}" class="site-btn sb-white">VOTE NOW</a>
                             @endif
                         </div>
@@ -116,8 +116,8 @@
                                 @if ($role == 'company' && ($design->state == "sketch"))
                                     <a href="javascript:void(0)" data-id="{{ $design->id }}" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
                                 @endif
-                                @if ($role == 'user')
-                                    <a href="javascript:void(0)" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+                                @if((Auth::user())&&(Auth::user()->role == "user") && ($design->state == "sketch") )
+                                    <a href="{{route('design.show', ['design' => $design->id])}}" class="wishlist-btn"><i class="flaticon-heart"></i></a>
                                 @endif
                             </div>
                         </div>
@@ -126,26 +126,17 @@
                                 <h6>${{ $design->price }}</h6>
                             @endif
                             <p>{{ $design->title }}</p>
+                            <div class="designer-name">
+                                <i style="font-style: italic;">By</i> 
+                                <a href="{{route('designer.show', ['designer' => $design->designer->id])}}" class="designer">{{$design->designer->name}}</a>
+                            </div>
                         </div>
                     </div>
                 @endforeach
                
             </div>
     </section>
-    <!-- letest design section end -->
 
-    {{-- tags sction --}}
-    {{-- <div class="container">
-        <ul class="product-filter-menu">
-            <h4 class="mb-1">Our Tags</h4>
-            @foreach ($tags as $tag)
-                <li><a href="#">{{$tag->name}}</a></li>
-            @endforeach
-        </ul>
-    </div> --}}
-    {{-- End of tags section  --}}
-
-    <!-- Product filter section -->
     <section class="product-filter-section">
         <div class="container">
             <div class="section-title">
@@ -171,9 +162,9 @@
                                     @if ($role == 'company' && ($design->state == "sketch"))
                                         <a href="javascript:void(0)" data-id="{{ $design->id }}" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
                                     @endif                                    
-                                    @if ($role == 'user')
-                                        <a href="javascript:void(0)" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                                    @endif                                
+                                    @if((Auth::user())&&(Auth::user()->role == "user") && ($design->state == "sketch") )
+										<a href="{{route('design.show', ['design' => $design->id])}}" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+									@endif                               
                                 </div>
                             </div>
                             <div class="pi-text">
@@ -181,6 +172,10 @@
                                     <h6>${{ $design->price }}</h6>
                                 @endif
                                 <p>{{ $design->title}}</p>
+                                <div class="designer-name">
+                                    <i style="font-style: italic;">By</i> 
+                                    <a href="{{route('designer.show', ['designer' => $design->designer->id])}}" class="designer">{{$design->designer->name}}</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -205,7 +200,7 @@
                         <div class="pi-pic">
                             <a href="{{route('company.show', $company)}}" >
                                 {{-- <img src="{{ asset('images/product/1.jpg') }}" alt=""> --}}
-                                <img src="{{asset('storage/'.$company->image)}}" alt="">
+                                <img src="{{asset('storage/'.$company->image)}}" alt="" style="height:200px;width:200px;border-radius: 50%">
                             </a>
                             <div class="pi-links">
                                 <a href="{{route('company.show', $company)}}" class="btn btn-info">KNOW MORE</a>

@@ -54,7 +54,8 @@ class DesignerController extends Controller
         $designers = User::whereHas('profile', function($query) {
             $query->where('is_verified','=','accepted');})->where('role','designer')->orderBy('likes', 'DESC')->paginate(10);
         // var_dump($designers);
-        return view('designer.designerslist',['designers'=>$designers]);
+        return view('designer.index', compact('designers'));
+        // return view('designer.designerslist',['designers'=>$designers]);
     }
 
     /**
@@ -103,7 +104,11 @@ class DesignerController extends Controller
         else{
             $prev_images = null;
         }            
+<<<<<<< HEAD
         return view('designer.profile',['designer'=>$designer,'user'=>$user,'vote_exist'=>$vote_exist,'design_count'=>$current_designs,'featured_images'=>$fimage_array,'current_images'=>$cimage_array,'likes'=>$likes_count,'about'=>$about,'prev_img'=>$pimage_array,'prev_count'=>$prev_work_count,'designs'=>$designs]);       
+=======
+        return view('designer.show',['designer'=>$designer[0],'user'=>$user,'vote_exist'=>$vote_exist,'design_count'=>$current_designs,'featured_images'=>$fimage_array,'current_images'=>$cimage_array,'likes'=>$likes_count,'about'=>$about,'prev_img'=>$prev_images,'prev_count'=>$prev_work_count,'designs'=>$designs]);       
+>>>>>>> main
     }    
     /**
      * Remove the specified resource from storage.
