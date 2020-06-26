@@ -43,7 +43,7 @@ class DesignPolicy
     public function create(User $user)
     {
         //
-        return $user->role === "designer"
+        return $user->role === "designer" && $user->profile->is_verified === "accepted"
                 ? Response::allow()
                 : Response::deny('Unauthorized User');
     }
