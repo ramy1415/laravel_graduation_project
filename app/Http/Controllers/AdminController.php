@@ -169,13 +169,29 @@ class AdminController extends Controller
      */
     public function change_user_verification(Request $request,$role)
     {
-        
-        try {
+        $validator = \Validator::make($request->all(), [
+            'reciever' => 'required',
+            'Subject' => 'required',
+            'Message' => 'required',
+        ]);
+
+         if ($validator->fails())
+        {
+            return response()->json(['errors'=>$validator->errors()->all()]);
+        }
+
+        $email=$request->reciever;
+        $subject=$request->Subject;
+        $message=$request->Message;
+        $id=$request->user_id;
+        $user=User::find($id);
+        // try {
             $user = User::find($request->user_id);
             $user->profile->update(['is_verified'=>$request->status]);
-        } catch (\Throwable $th) {
-            return response('failed to change status',500);
-        }
+            \Mail::to($email)->send(new \App\Mail\ProfileConfirmation(['message' => $message,'subject' =>$subject,'user' => $user,'status' =>$request->status,'role'=>$role]));
+        // } catch (\Throwable $th) {
+        //     return response('failed to change status',500);
+        // }
         return response($request->status ." ". $user->name ,200);
 
     }
