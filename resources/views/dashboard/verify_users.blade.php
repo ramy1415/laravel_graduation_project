@@ -14,7 +14,7 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Users Table</h6>
+    <h6 class="m-0 font-weight-bold text-primary">{{ trans($role) }} Table</h6>
   </div>
   <div class="card-body">
     <div class="table-responsive">
@@ -74,10 +74,10 @@
                             <form class="form-horizontal" role="form"  method="post" action="#">
                                 @csrf
                                             
-                                <input type="text" placeholder="To" name="To" value="{{ $user->email }}" class="form-control  reciever" autofocus>
-                                <input type="text" placeholder="Subject" name="Subject"  class="form-control mt-2 Subject" autofocus>
+                                <input type="text" placeholder="To" name="To" value="{{ $user->email }}" class="form-control  reciever{{$user->id}}" autofocus>
+                                <input type="text" placeholder="Subject" name="Subject"  class="form-control mt-2 Subject{{$user->id}}" autofocus>
                                 <input type="hidden" value="{{$user->id}}" id="user_id">
-                                <textarea  name="Message" placeholder="Message" class="form-control mb-2 mt-2 Message" rows="4" cols="50" autofocus></textarea>
+                                <textarea  name="Message" placeholder="Message" class="form-control mb-2 mt-2 Message{{$user->id}}" rows="4" cols="50" autofocus></textarea>
                                               
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-primary" type="submit" onclick="change_verification($('#'+{{ $user->id }}),{{$user->id}},'rejected')" >Send</button>
@@ -106,11 +106,11 @@
 @push('scripts')
     <script>
         function change_verification(btn,user_id,status) {
-            let reciever=$('.reciever').val();
+            let reciever=$('.reciever'+user_id).val();
             if(status == 'rejected')
             {
-                Subject=$('.Subject').val();
-                Message=$('.Message').val();
+                Subject=$('.Subject'+user_id).val();
+                Message=$('.Message'+user_id).val();
             }
             else if(status == 'accepted')
             {

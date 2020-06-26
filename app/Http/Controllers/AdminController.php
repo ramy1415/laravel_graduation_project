@@ -86,7 +86,7 @@ class AdminController extends Controller
         
         $designChart = new LikesChart;
         $designChart->labels($designR->keys());
-        $designChart->dataset('Designers likes', 'bar', $designR->values())
+        $designChart->dataset('Designs likes', 'bar', $designR->values())
             ->backgroundColor('#89CFF0');
         
         return view('dashboard.designs.chart', compact('designChart'));
@@ -219,6 +219,7 @@ class AdminController extends Controller
         $email=$request->reciever;
         $subject=$request->Subject;
         $message=$request->Message;
+        // dd($email);
         $id=$request->design_id;
         $design=Design::find($id);
         try {

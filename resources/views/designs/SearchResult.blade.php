@@ -18,6 +18,10 @@
 										<h6 style="font-family: monospace;">&dollar;{{$design->price}}</h6>
 										@endif
 										<a href="{{route('design.show',$design->id)}}" style="color: black;">{{$design->title}}</a>
+										<div class="designer-name">
+											<i style="font-style: italic;">By</i> 
+											<a href="{{route('designer.show', ['designer' => $design->designer->id])}}" class="designer">{{$design->designer->name}}</a>
+										</div>
 
 										
 									</div>

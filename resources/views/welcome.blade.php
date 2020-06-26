@@ -222,7 +222,11 @@
                 <div class="tag-new">NEW</div>
                 <span>New DESIGNS</span>
                 <h2>EVERY DAY</h2>
-                <a href="{{route('design.index')}}" class="site-btn">VOTE NOW</a>
+                @auth
+                    <a href="{{route('design.index')}}" class="site-btn">VOTE NOW</a>
+                @else
+                    <a href="{{ route('createAccount') }}" class="site-btn">Register NOW</a>
+                @endauth
             </div>
         </div>
     </section>
