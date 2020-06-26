@@ -185,13 +185,13 @@ class AdminController extends Controller
         $message=$request->Message;
         $id=$request->user_id;
         $user=User::find($id);
-        // try {
+        try {
             $user = User::find($request->user_id);
             $user->profile->update(['is_verified'=>$request->status]);
             \Mail::to($email)->send(new \App\Mail\ProfileConfirmation(['message' => $message,'subject' =>$subject,'user' => $user,'status' =>$request->status,'role'=>$role]));
-        // } catch (\Throwable $th) {
-        //     return response('failed to change status',500);
-        // }
+        } catch (\Throwable $th) {
+            return response('failed to change status',500);
+        }
         return response($request->status ." ". $user->name ,200);
 
     }
