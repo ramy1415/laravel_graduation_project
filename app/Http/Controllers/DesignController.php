@@ -312,7 +312,7 @@ class DesignController extends Controller
                         
             }              
         }
-
+        $design->save();
         return redirect("design/".$design->id)->with('success','Design Upadated Successfuly');
     }
 
