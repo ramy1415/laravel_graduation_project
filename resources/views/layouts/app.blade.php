@@ -123,7 +123,7 @@
 
                                                     @endif
                                                     @if($notification->type === "App\\Notifications\\UserWithdrawNotification")
-                                                    <a class="dropdown-item notify" href="{{ route('balance',Auth::user()->id) }}">
+                                                    <a class="dropdown-item notify" href="{{$notification->data['route']}}">
                                                       Your withdraw Request is {{$notification->data['state']}} check your email for more information
                                                     </a>
 
@@ -351,7 +351,7 @@
                     else if(notification['type'] === 'App\\Notifications\\UserWithdrawNotification')
                     {
                             $('#notificationList').prepend(`
-                            <a class="dropdown-item" href="{{ route('balance',Auth::user()->id) }}">
+                            <a class="dropdown-item" href="${notification['route']}">
                             Your withdraw Request is ${notification['state']} check your email for more information
                             </a>
                             `);
