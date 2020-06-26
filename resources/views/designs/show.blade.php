@@ -203,7 +203,10 @@
 				        </div>`;
 						$(reply).insertBefore($(form));
 						$('#'+formId).children('form').children("div").children( 'input[type=text]')[0].value="";
-						
+						let replies= $('#Commentreplies'+comment_id).html();
+						let count=replies.split("")[0];
+						console.log(replies);
+						$('#Commentreplies'+comment_id).html(parseInt(count)+1+" replies");
 
 					},
 					error: function (XMLHttpRequest) {

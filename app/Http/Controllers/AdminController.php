@@ -88,7 +88,7 @@ class AdminController extends Controller
         
         $designChart = new LikesChart;
         $designChart->labels($designR->keys());
-        $designChart->dataset('Designers likes', 'bar', $designR->values())
+        $designChart->dataset('Designs likes', 'bar', $designR->values())
             ->backgroundColor('#89CFF0');
         
         return view('dashboard.designs.chart', compact('designChart'));
@@ -174,10 +174,26 @@ class AdminController extends Controller
      */
     public function change_user_verification(Request $request,$role)
     {
-        
+        $validator = \Validator::make($request->all(), [
+            'reciever' => 'required',
+            'Subject' => 'required',
+            'Message' => 'required',
+        ]);
+
+         if ($validator->fails())
+        {
+            return response()->json(['errors'=>$validator->errors()->all()]);
+        }
+
+        $email=$request->reciever;
+        $subject=$request->Subject;
+        $message=$request->Message;
+        $id=$request->user_id;
+        $user=User::find($id);
         try {
             $user = User::find($request->user_id);
             $user->profile->update(['is_verified'=>$request->status]);
+            \Mail::to($email)->send(new \App\Mail\ProfileConfirmation(['message' => $message,'subject' =>$subject,'user' => $user,'status' =>$request->status,'role'=>$role]));
         } catch (\Throwable $th) {
             return response('failed to change status',500);
         }
@@ -205,6 +221,7 @@ class AdminController extends Controller
         $email=$request->reciever;
         $subject=$request->Subject;
         $message=$request->Message;
+        // dd($email);
         $id=$request->design_id;
         $design=Design::find($id);
         try {

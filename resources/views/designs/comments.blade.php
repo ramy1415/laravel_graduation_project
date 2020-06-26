@@ -11,8 +11,8 @@
               </div>
               <p>{{ $comment->body }}</p>
               <ul class="list-inline d-sm-flex my-0">
-                <li class="list-inline-item ml-2">
-                  <p>{{$comment->replies->count() }} Replies</p>
+                <li class="list-inline-item ml-2 ">
+                  <p id="Commentreplies{{$comment->id}}">{{$comment->replies->count() }} Replies</p>
                 </li>
                 <li class="list-inline-item ml-auto">
 
