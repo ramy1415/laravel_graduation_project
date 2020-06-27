@@ -101,7 +101,7 @@
                     <div class="col-xl-6 col-lg-5">
                         <form class="header-search-form" method="GET" action="{{ route('search') }}">
                             <input type="text" placeholder="Search by Tag or Category ...." name="word">
-                            <button><i class="flaticon-search"></i></button>
+                            <button><i class="fa fa-search"></i></button>
                         </form>
                     </div>
                     <div class="col-xl-4 col-lg-5">
