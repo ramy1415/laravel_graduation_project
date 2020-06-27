@@ -215,7 +215,7 @@ class DesignController extends Controller
                         'image' => $filename
                     ]);
             }
-            return redirect("design/".$design->id)->with('success','Design added successfuly');
+            return redirect("design/".$design->id)->with('success','Design added successfuly,please wait while your design is verified .');
             
         }
     }

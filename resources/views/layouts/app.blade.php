@@ -74,17 +74,17 @@
 <body>
     <div id="app">
         @auth
-            @if (Auth::user()->email_verified_at === null)
-            <div class="alert alert-success" role="alert">
-                <strong>Your email is not verified yet please check your email</strong>
+            @if ((Auth::user()->email_verified_at === null) ||  (Auth::user()->profile->is_verified != 'accepted'))
+            <div class="alert alert-success " role="alert">
+                <ul class="ml-5">
+                    @if (Auth::user()->email_verified_at === null)
+                       <li> <strong>Your email is not verified yet please check your email</strong> </li> 
+                    @endif
+                    @if( (Auth::user()->role != 'user') &&(Auth::user()->profile->is_verified != 'accepted') )
+                     <li><strong>Your profile is not accepted yet !</strong> </li> 
+                    @endif
+                </ul>
             </div>
-            @endif
-            @if(Auth::user()->role != 'user')
-                @if (Auth::user()->profile->is_verified != 'accepted')
-                <div class="alert alert-success" role="alert">
-                <strong>Your profile is not accepted yet !</strong>
-                </div>
-                @endif
             @endif
         @endauth
         <!-- Header section -->
