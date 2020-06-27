@@ -86,7 +86,7 @@ class CompanyController extends Controller
             'link' => ['required'],
             'image'=>['required','image'],
             'title'=>['required','string','min:5'],
-            'price'=>['required','numeric']
+            'price'=>['required','numeric','max:100']
         ]);
     }
 
