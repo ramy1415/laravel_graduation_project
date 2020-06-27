@@ -109,7 +109,7 @@
 							<a href="{{route('design.show', ['design'=>$fimage->design_id])}}"><img style="width:250px;height:300px;"class='featured_image'id =' {{$fimage->design->id}}' src="{{asset ('storage/'.$fimage->image) }}" alt=""></a>
 							@can('update',$designer_data)
 								@if($user->role == "designer"&& $fimage->design->featured )
-								<span class="glyphicon glyphicon-trash"id ="{{$fimage->design->id}}"></span>
+								<i class="fa fa-trash"id ="{{$fimage->design->id}}"></i>
 								@endif
 							@endcan
 						</div>

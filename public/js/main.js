@@ -272,13 +272,12 @@ $(window).on('load', function() {
 				console.log(data.design_image);	
 				console.log(event.target);
 				$(event.target).hide();
-				// $('.featured#'+design_id).hide();
 				console.log(design_id);
 				$('#featuresection').append(`<div class="col-lg-3 col-sm-6">
 				<div class="product-item" >
 				<img style="width:250px;height:300px;"id ="${design_id}" class='featured_image' src="/storage/${data.design_image.image}" alt="">
 				</div>
-					<span class="glyphicon glyphicon-trash" id ="${design_id}"></span>
+					<span class="fa fa-trash" id ="${design_id}"></span>
 				</div>	
 			 	`)
 
@@ -290,7 +289,7 @@ $(window).on('load', function() {
 		});
 	});
 
-	$(".glyphicon-trash").on("click", function (event){
+	$(".fa-trash").on("click", function (event){
 		event.preventDefault();
 		let design_id = event.target.id;
 		console.log(design_id);

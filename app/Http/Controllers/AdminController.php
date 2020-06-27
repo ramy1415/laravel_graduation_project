@@ -338,7 +338,7 @@ class AdminController extends Controller
                                         <button type="button" class="btn btn-danger" onclick="change_verification(this,'.$row->id.',"rejected")">Reject</button>
                                     </td>
                                     
-                                    </tr>
+                                   
                             ';
                             }
                             '</tr>
