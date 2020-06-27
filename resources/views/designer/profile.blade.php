@@ -104,7 +104,7 @@
 			{{-- <div class="product-slider owl-carousel" >    --}}
 			<div class="row" id="featuresection">
 				@foreach($featured_images as $fimage)
-					<div class="col-lg-3 col-sm-6">
+					<div class="col-lg-3 col-sm-6"  id="design{{$fimage->design->id}}">
 						<div class="product-item" >
 							<a href="{{route('design.show', ['design'=>$fimage->design_id])}}"><img style="width:250px;height:300px;"class='featured_image'id =' {{$fimage->design->id}}' src="{{asset ('storage/'.$fimage->image) }}" alt=""></a>
 							@can('update',$designer_data)
@@ -158,20 +158,19 @@
 			<div class="section-title">
 				<h2>PREVIOUS DESIGNS</h2>
 			</div>
-			<div class="product-slider owl-carousel">
-			@if($prev_img != null)	
-            @foreach($prev_img as $pimage)
+			<div class="product-slider owl-carousel">	
+            @forelse($prev_works as $design)
 				<div class="product-item">
 					<div class="pi-pic">
-						<img style="height:300px;width:250px;"src="{{asset ('storage/'.$pimage->image) }}" alt="">
+						<img style="height:300px;width:250px;"src="{{asset ('storage/'.$design->images()->first()->image) }}" alt="">
 					</div>
 					</br>
 				</div>
-			@endforeach
-			</div>
-			@else 
+			@empty
 				<h3 style="text-align:center;color:navy;">There are no designs sold yet</h3>
-			@endif
+			@endforelse
+			</div> 
+			
 		</div>
 	</section>		
 	<!-- previous work section end -->

@@ -84,6 +84,7 @@ body {
         color: white;
 
     }
+
 .show{
 	color: #f51167;
 			
@@ -218,6 +219,12 @@ ol {
 	cursor: pointer;
 	text-align: center;
 }
+a:hover{
+	color:#f51167;
+}
+.comany:hover{
+    	color: white !important;
+    }
 .deleteDesign{
 	display: inline-block;
 	border: none;
@@ -1116,7 +1123,7 @@ ol {
 
 .footer-section {
 	background: #282828;
-	padding-top: 60px;
+	padding-top: 40px;
 }
 
 .footer-logo {
@@ -1237,7 +1244,7 @@ ol {
 
 .social-links-warp {
 	border-top: 2px solid #3b3535;
-	padding: 46px 0;
+	padding: 10px 0;
 }
 
 .social-links a {

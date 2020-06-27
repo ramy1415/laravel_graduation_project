@@ -273,7 +273,7 @@ $(window).on('load', function() {
 				console.log(event.target);
 				$(event.target).hide();
 				console.log(design_id);
-				$('#featuresection').append(`<div class="col-lg-3 col-sm-6">
+				$('#featuresection').append(`<div class="col-lg-3 col-sm-6" id="design${design_id}">
 				<div class="product-item" >
 				<img style="width:250px;height:300px;"id ="${design_id}" class='featured_image' src="/storage/${data.design_image.image}" alt="">
 				</div>
@@ -289,7 +289,7 @@ $(window).on('load', function() {
 		});
 	});
 
-	$(".fa-trash").on("click", function (event){
+	$(document).on("click", ".fa-trash", function (event){
 		event.preventDefault();
 		let design_id = event.target.id;
 		console.log(design_id);
@@ -306,7 +306,10 @@ $(window).on('load', function() {
 				console.log("success");
 				console.log(data);	
 				console.log(event.target);
-				$('.featured_image#'+design_id ).parent().parent().hide();
+				console.log("design"+design_id);
+				console.log($('#design'+design_id) );
+				// $('.featured_image#'+design_id ).parent().hide();
+				$('#design'+design_id).hide();
 				$('.current#'+design_id).append(`
 				<button class="btn btn-info featured" id="${design_id}">Add as a Featured</button>
 				`)						

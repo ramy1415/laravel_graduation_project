@@ -27,7 +27,7 @@ class DesignController extends Controller
      */
     public function index(Request $request)
     {
-        $desings=Design::where('is_verified','=','accepted')->paginate(6, ['*'], 'designs');
+        $desings=Design::where('is_verified','=','accepted')->paginate(9, ['*'], 'designs');
         $maxPrice=Design::all()->max('price');
         $minPrice=Design::all()->min('price');
         $tags=Tag::all();
@@ -74,14 +74,14 @@ class DesignController extends Controller
                      $filteredDesigns->orderBy('created_at', 'desc');
                 }
             }
-            $desings=$filteredDesigns->paginate(6, ['*'], 'filtered');
+            $desings=$filteredDesigns->paginate(9, ['*'], 'filtered');
             return view('designs.listDesigns',compact('desings'));
     }
 
     public function search(Request $request)
     {
         $SearchWord=$request->word;
-        $designs=Design::whereHas('tag', function($query) use ($SearchWord) {$query->where(DB::raw('lower(name)'), "LIKE", strtolower($SearchWord)."%");})->orWhere(DB::raw('lower(category)'), "LIKE", strtolower($SearchWord)."%")->paginate(9);
+        $designs=Design::whereHas('tag', function($query) use ($SearchWord) {$query->where(DB::raw('lower(name)'), "LIKE", strtolower($SearchWord)."%");})->where('is_verified','=','accepted')->orWhere(DB::raw('lower(category)'), "LIKE", strtolower($SearchWord)."%")->paginate(9);
         return view('designs.SearchResult',compact('designs'));
         //
     }
@@ -312,7 +312,7 @@ class DesignController extends Controller
                         
             }              
         }
-
+        $design->save();
         return redirect("design/".$design->id)->with('success','Design Upadated Successfuly');
     }
 

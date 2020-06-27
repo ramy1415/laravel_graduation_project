@@ -10,6 +10,7 @@
         <title>MY DESIGN</title>
         
         <!-- Scripts -->
+          @stack('my_style')
         <script src="{{ asset('js/app.js') }}" defer></script>
     {{-- login    --}}
     <link rel="stylesheet" type="text/css" href="{{ asset('css/util.css') }}">
@@ -36,7 +37,7 @@
     <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/animate.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}"/>
-    @stack('my_style')        
+          
     <style type="text/css">
         #Notifications::after {
             content: none;
@@ -71,17 +72,17 @@
 <body>
     <div id="app">
         @auth
-            @if (Auth::user()->email_verified_at === null)
-            <div class="alert alert-success" role="alert">
-                <strong>Your email is not verified yet please check your email</strong>
-            </div>
-            @endif
-            @if(Auth::user()->role != 'user')
-                @if (Auth::user()->profile->is_verified != 'accepted')
+            @if( (Auth::user()->email_verified_at === null) || (Auth::user()->profile->is_verified != 'accepted') )
                 <div class="alert alert-success" role="alert">
-                <strong>Your profile is not accepted yet !</strong>
-                </div>
+                    <ul style="margin-left: 20px;">
+                @if (Auth::user()->email_verified_at === null)
+                  <li>  <strong>Your email is not verified yet please check your email</strong> </li>
                 @endif
+                @if( (Auth::user()->role != 'user') && (Auth::user()->profile->is_verified != 'accepted') )
+                  <li> <strong>Your profile is not accepted yet !</strong> </li> 
+                @endif
+                </ul>
+                </div>
             @endif
         @endauth
         <!-- Header section -->
@@ -245,22 +246,12 @@
     <!-- Footer section -->
     <section class="footer-section">
         <div class="social-links-warp">
-            <div class="container">
-                <div class="social-links">
-                    <a href="" class="instagram"><i class="fa fa-instagram"></i><span>instagram</span></a>
-                    <a href="" class="google-plus"><i class="fa fa-google-plus"></i><span>g+plus</span></a>
-                    <a href="" class="pinterest"><i class="fa fa-pinterest"></i><span>pinterest</span></a>
-                    <a href="" class="facebook"><i class="fa fa-facebook"></i><span>facebook</span></a>
-                    <a href="" class="twitter"><i class="fa fa-twitter"></i><span>twitter</span></a>
-                    <a href="" class="youtube"><i class="fa fa-youtube"></i><span>youtube</span></a>
-                    <a href="" class="tumblr"><i class="fa fa-tumblr-square"></i><span>tumblr</span></a>
-                </div>
-
+            <!-- <div class="container"> -->
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --> 
-<p class="text-white text-center mt-5">Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved</p>
+<p class="text-white text-center ">Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved</p>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 
-            </div>
+            <!-- </div> -->
         </div>
     </section>
     <!-- Footer section end -->
