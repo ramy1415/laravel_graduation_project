@@ -1,10 +1,11 @@
 
 	@extends('layouts.app')
-	@section('styles')
-		
+
+
+@section('styles')		
 	
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Prata&display=swap" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Prata&display=swap" rel="stylesheet"> -->
 
     <link rel="stylesheet" href="{{ asset('css/Tcss/open-iconic-bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/Tcss/animate.css') }}">
@@ -17,15 +18,15 @@
 
     <link rel="stylesheet" href="{{ asset('css/Tcss/ionicons.min.css') }}">
 
-    <link rel="stylesheet" href="{{ asset('css/Tcss/bootstrap-datepicker.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/Tcss/jquery.timepicker.css') }}">
+    <!-- <link rel="stylesheet" href="{{ asset('css/Tcss/bootstrap-datepicker.css') }}"> -->
+    <!-- <link rel="stylesheet" href="{{ asset('css/Tcss/jquery.timepicker.css') }}"> -->
 
     
-    <link rel="stylesheet" href="{{ asset('css/Tcss/flaticon.css') }}">
+    <!-- <link rel="stylesheet" href="{{ asset('css/Tcss/flaticon.css') }}"> -->
     <link rel="stylesheet" href="{{ asset('css/Tcss/icomoon.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/Tcss/style.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/fonts/font/flaticon.css') }}"/>
-	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
 
 
 	@endsection
@@ -223,10 +224,10 @@
 </section>
 @endsection
   @push('scripts')
-	<script src="{{ asset('js/templatejs/jquery.min.js') }}"></script>
+	<!-- <script src="{{ asset('js/templatejs/jquery.min.js') }}"></script> -->
 	<script src="{{ asset('js/templatejs/jquery-migrate-3.0.1.min.js') }}"></script>
 	<script src="{{ asset('js/templatejs/popper.min.js') }}"></script>
-	<script src="{{ asset('js/templatejs/bootstrap.min.js') }}"></script>
+	<!-- <script src="{{ asset('js/templatejs/bootstrap.min.js') }}"></script> -->
 	<script src="{{ asset('js/templatejs/jquery.easing.1.3.js') }}"></script>
 	<script src="{{ asset('js/templatejs/jquery.waypoints.min.js') }}"></script>
 	<script src="{{ asset('js/templatejs/jquery.stellar.min.js') }}"></script>
@@ -237,8 +238,8 @@
 	<script src="{{ asset('js/templatejs/bootstrap-datepicker.js') }}"></script>
 	<script src="{{ asset('js/templatejs/jquery.timepicker.min.js') }}"></script>
 	<script src="{{ asset('js/templatejs/scrollax.min.js') }}"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-	<script src="{{ asset('js/templatejs/google-map.js') }}"></script>
+	<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script> -->
+	<!-- <script src="{{ asset('js/templatejs/google-map.js') }}"></script> -->
 	<script src="{{ asset('js/templatejs/main.js') }}"></script>
   @endpush
 

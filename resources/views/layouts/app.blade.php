@@ -10,23 +10,26 @@
         <title>MY DESIGN</title>
         
         <!-- Scripts -->
+
+          @stack('my_style')
+          
         <script src="{{ asset('js/app.js') }}" defer></script>
     {{-- login    --}}
     <link rel="stylesheet" type="text/css" href="{{ asset('css/util.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}">
     {{-- end of login --}}
-    
+     
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
+   
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
 
     <!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet"> -->
-
+    
     <!-- Stylesheets -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}"/>
@@ -49,7 +52,7 @@
             background-color:lightgray;
         }
     </style>
-
+     @yield('styles')
     <script type="text/javascript">
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
@@ -63,7 +66,7 @@
     </script>
 
     @endif
-    @yield('styles')
+   
      
 
 
@@ -246,15 +249,7 @@
     <section class="footer-section">
         <div class="social-links-warp">
             <div class="container">
-                <div class="social-links">
-                    <a href="" class="instagram"><i class="fa fa-instagram"></i><span>instagram</span></a>
-                    <a href="" class="google-plus"><i class="fa fa-google-plus"></i><span>g+plus</span></a>
-                    <a href="" class="pinterest"><i class="fa fa-pinterest"></i><span>pinterest</span></a>
-                    <a href="" class="facebook"><i class="fa fa-facebook"></i><span>facebook</span></a>
-                    <a href="" class="twitter"><i class="fa fa-twitter"></i><span>twitter</span></a>
-                    <a href="" class="youtube"><i class="fa fa-youtube"></i><span>youtube</span></a>
-                    <a href="" class="tumblr"><i class="fa fa-tumblr-square"></i><span>tumblr</span></a>
-                </div>
+            
 
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --> 
 <p class="text-white text-center mt-5">Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved</p>

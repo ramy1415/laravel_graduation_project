@@ -12,9 +12,10 @@ class IndexController extends Controller
 {
     public function index(){
 
-        $latestDesigns = Design::orderBy('id', 'desc')->take(8)->get();
-        $topDesigns = Design::orderBy('total_likes', 'desc')->take(8)->get();
-        $companies = User::where('role', '=', 'company')->get();
+        $latestDesigns = Design::where('is_verified','=','accepted')->orderBy('id', 'desc')->take(8)->get();
+        $topDesigns = Design::where('is_verified','=','accepted')->orderBy('total_likes', 'desc')->take(8)->get();
+        $companies = User::whereHas('profile', function($query) {
+            $query->where('is_verified','=','accepted');})->where('role', '=', 'company')->get();
 
         $role = is_null(auth()->user()) ? 'm3l4' : auth()->user()->role;
          

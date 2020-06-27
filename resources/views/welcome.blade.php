@@ -100,7 +100,7 @@
                         <div class="feature-icon">
                             <img src="{{ asset('images/icons/3.png') }}" alt="#">
                         </div>
-                        <h2>Pick Your Design </h2>
+                        <h2>One Click delivery </h2>
                     </div>
                 </div>
             </div>
