@@ -27,7 +27,7 @@ class DesignController extends Controller
      */
     public function index(Request $request)
     {
-        $desings=Design::where('is_verified','=','accepted')->paginate(6, ['*'], 'designs');
+        $desings=Design::where('is_verified','=','accepted')->paginate(9, ['*'], 'designs');
         $maxPrice=Design::all()->max('price');
         $minPrice=Design::all()->min('price');
         $tags=Tag::all();
@@ -74,7 +74,7 @@ class DesignController extends Controller
                      $filteredDesigns->orderBy('created_at', 'desc');
                 }
             }
-            $desings=$filteredDesigns->paginate(6, ['*'], 'filtered');
+            $desings=$filteredDesigns->paginate(9, ['*'], 'filtered');
             return view('designs.listDesigns',compact('desings'));
     }
 

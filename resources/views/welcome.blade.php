@@ -1,6 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
+<style type="text/css">
+    .price{
+        font-size: 14px;
+    padding: 0 7px;
+    display: inline-block;
+    border: none;
+    line-height: inherit;
+    background: #fff;
+    font-weight: 400;
+    color: #797874;
+    border-radius: 4px;
+    }
+</style>
     <!-- Hero section Done (just needs new images for the slider)-->
     <section class="hero-section">
         <div class="hero-slider owl-carousel">
@@ -87,7 +100,7 @@
                         <div class="feature-icon">
                             <img src="{{ asset('images/icons/3.png') }}" alt="#">
                         </div>
-                        <h2>One Click Delivery</h2>
+                        <h2>Pick Your Design </h2>
                     </div>
                 </div>
             </div>
@@ -110,7 +123,7 @@
                             <div class="tag-sale">Sold</div>
                             @endif
                             <a href="{{route('design.show', ['design' => $design->id])}}"> 
-                                <img width="200px" height="350px"  src="{{asset ('storage/'.$design->images()->first()->image) }}" alt="">
+                                <img width="200px" height="350px" style="border-radius: 5%" src="{{asset ('storage/'.$design->images()->first()->image) }}" alt="">
                             </a>
                             <div class="pi-links"> 
                                 @if ($role == 'company' && ($design->state == "sketch"))
@@ -122,10 +135,12 @@
                             </div>
                         </div>
                         <div class="pi-text">
+                            
+                            <a href="{{route('design.show', ['design' => $design->id])}}"> <p style="display: inline;">
+                                {{ $design->title }}</p></a>
                             @if ($role == 'company')
-                                <h6>${{ $design->price }}</h6>
+                                <span  class="price" style="float: right;">${{ $design->price }}</span> 
                             @endif
-                            <p>{{ $design->title }}</p>
                             <div class="designer-name">
                                 <i style="font-style: italic;">By</i> 
                                 <a href="{{route('designer.show', ['designer' => $design->designer->id])}}" class="designer">{{$design->designer->name}}</a>
@@ -137,10 +152,10 @@
             </div>
     </section>
 
-    <section class="product-filter-section">
-        <div class="container">
-            <div class="section-title">
-                <h2>BROWSE TOP LIKED DESIGNS</h2>
+    <section class="product-filter-section" style="    background-color: #f5f4f2;">
+        <div class="container ">
+            <div class="section-title " style="    padding-top: 20px;">
+                <h2 class="headers">BROWSE TOP LIKED DESIGNS</h2>
             </div>
             <div class="row">
                 @foreach ($topDesigns as $design)
@@ -155,7 +170,7 @@
                                 </a> --}}
                                 
                                 <a href="{{route('design.show', ['design' => $design->id])}}">
-                                        <img width="250px" height="420px" src="{{asset ('storage/'.$design->images()->first()->image) }}" alt="">
+                                        <img width="338" height="241" style="border-radius: 5%" src="{{asset ('storage/'.$design->images()->first()->image) }}" alt="">
                                 </a>
                                
                                 <div class="pi-links">
@@ -169,9 +184,9 @@
                             </div>
                             <div class="pi-text">
                                 @if ($role == 'company')
-                                    <h6>${{ $design->price }}</h6>
+                                    <span  class="price" style="float: right;">${{ $design->price }}</span>
                                 @endif
-                                <p>{{ $design->title}}</p>
+                                <a href="{{route('design.show', ['design' => $design->id])}}"> <p>{{ $design->title}}</p></a>
                                 <div class="designer-name">
                                     <i style="font-style: italic;">By</i> 
                                     <a href="{{route('designer.show', ['designer' => $design->designer->id])}}" class="designer">{{$design->designer->name}}</a>

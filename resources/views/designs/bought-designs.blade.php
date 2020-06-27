@@ -23,9 +23,8 @@
 									
 									<div class="pi-text">
 										<a href="{{route('design.show',$design->id)}}" style="color: black;">{{$design->title}}</a>
-										<div>
-										<a href="{{asset ('storage/'.$design->source_file) }}" download="{{$design->source_file}}">Download</a>
-										</div>
+										<a href="{{asset ('storage/'.$design->source_file) }}" download="{{$design->source_file}}" class="btn btn-dark" style="float: right;">Download</a>									
+							
 									</div>
 									
 								</div>
