@@ -100,7 +100,7 @@ Route::resource('user','ProfileController')->only([
         Route::post('do-login', 'AdminAuthController@adminLogin')->name('adminDologin');
         
         Route::group(['middleware' => 'admin'], function(){
-            Route::get('/', 'AdminController@index')->name('dashboard');
+            Route::get('/', 'AdminController@list')->name('dashboard');
             Route::post('logout', 'AdminAuthController@logMeOut')->name('admin.logout');
             Route::resource('tag', 'TagController');
             Route::resource('material', 'MaterialController');
@@ -121,6 +121,10 @@ Route::resource('user','ProfileController')->only([
             Route::get('designs', 'AdminController@listDesigns')->name('designs.list');
             Route::get('designs/chart/{id}', 'AdminController@designChart')->name('design.chart');
             Route::get('livesearch','AdminController@action')->name('livesearch');
+
+            Route::resource('admin', 'AdminController')->only([
+                'index','create','store','destroy'
+                ]);
 
     });
 });
