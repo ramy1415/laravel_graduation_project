@@ -12,10 +12,20 @@
 <p class="mb-4">This is a list of {{ trans($role) }}s which needs to be verified.</a>.</p>
 
 <!-- DataTales Example -->
+
 <div class="card shadow mb-4">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Designs Table</h6>
+    <h6 class="m-0 font-weight-bold text-primary">Designers Table</h6>
   </div>
+  @if($role == "designer")
+  <div class="container box">
+        <div class="panel panel-default">
+            <div class="panel-body">
+            <input type = "text" name="search"  id = "search" onkeyup="inputchange(this.value,'{{$state}}')" placeholder="Search For Designers" class="form-control" /> 
+            </div>  
+        </div>
+    </div>
+    @endif
   <div class="card-body">
     <div class="table-responsive">
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -89,13 +99,60 @@
                         user_id,
                         status
                     },success:function (data) {
+                        console.log("in ver ch");
+                        console.log(data);
+                             
                         $(btn).parents('tr').hide('1000');
                         alert(data);
                     },error:function (responseJSON){
+                        console.log("error");
                         alert(responseJSON.responseText);
                     }
                 })
             }
         }
+    </script>
+    <script>
+        // $(document).ready(function(){
+            // fetch_designer_data('',state);
+
+
+            function fetch_designer_data(query = '',state)
+            { 
+                console.log(query);
+                $.ajaxSetup({
+                    headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                });
+                $.ajax
+                ({
+                    url:"{{ route('livesearch') }}",
+                    method:"GET",
+                    data:{query:query,state},
+                    dataType: 'json',
+                    success:function(data){
+                        console.log("success");
+                        console.log( data);
+                        $('tbody').html(data.table_data);
+                        $("#total_records").text(data.total_data);
+                    },
+                    error:function (responseJSON){
+                        console.log("erroe");
+                        // alert(responseJSON.responseText);
+                    }
+                })
+            }
+            function inputchange(value,state)
+            {
+                var query = value;
+                fetch_designer_data(query,state);
+            }
+            // $(document).on('keyup','#search',function(){
+            //     console.log("keyup");
+            //     var query = $(this).val();
+            //     fetch_designer_data(query);
+            // });
+        // });
     </script>
 @endpush

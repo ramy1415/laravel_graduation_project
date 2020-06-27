@@ -294,6 +294,79 @@ class AdminController extends Controller
        }
        return response('failed',500);
     }
+
+    public function action(Request $request)
+    {
+        if($request->ajax()) //this condition will check if this method receive ajax request or not
+        {
+            $output = '';
+            $query = $request->get('query');
+            $state = $request->get('state');
+
+            if($query != '')
+            {
+                $data = DB::table("users")->join("profiles","users.id","=","profiles.user_id")
+                            ->where(["role"=>"designer","profiles.is_verified"=>$state])
+                            ->where("name" ,"like", "%".$query."%")
+                            ->orderBy("id","asc")
+                            ->select("users.id","name","email","website","image")->paginate(5);
+            }else
+            {
+                $data = DB::table("users")->join("profiles","users.id","=","profiles.user_id")
+                            ->where(["role"=>"designer","profiles.is_verified"=>$state])
+                            ->orderBy("id","asc")
+                            ->select("users.id","name","email","website","image")->paginate(5);
+            }
+            $total_data= $data->count();
+            if($total_data > 0)
+            {
+                foreach($data as $row)
+                {
+                    $output .='
+                        <tr>
+                            <td>'.$row->id.'</td>
+                            <td>'.$row->name.'</td>
+                            <td>'.$row->email.'</td>
+                            <td>'.$row->website.'</td>
+                            <td><img class="img-thumbnail" style="width: 300px; height:200px" src={{asset("storage/"'.$row->image.')}} alt="" srcset=""></td>
+                            <td><a target="_blank" href="{{route("admin.view_user_document",'.$row->id.')}}" class="btn btn-success ">Preview Document</a></td>                
+                            ';
+                            if($state ==='rejected' || $state === 'pending' )
+                            { $output .='
+                                    <td class="align-middle">
+                                        <button type="button" class="btn btn-primary" onclick=change_verification(this,'.$row->id.',"accepted")>Accept</button>
+                                    </td>
+                                    ';
+                            }
+                            if($state === 'accepted' || $state === 'pending')
+                            { $output .='
+                                <td class="align-middle">
+                                        <button type="button" class="btn btn-danger" onclick="change_verification(this,'.$row->id.',"rejected")">Reject</button>
+                                    </td>
+                                    
+                                    </tr>
+                            ';
+                            }
+                            '</tr>
+                    ';
+                }
+            }
+            else 
+            {
+                $output .='
+                        <tr>
+                            <td align="center" colspan="7">No Data Found</td>
+                        </tr>
+                ';
+            } 
+            $data = array(
+                'table_data' => $output,
+                'total_data' => $total_data
+            );
+            echo json_encode($data);
+
+        }       
+    }
     /**
      * Display the specified resource.
      *

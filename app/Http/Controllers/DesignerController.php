@@ -43,19 +43,9 @@ class DesignerController extends Controller
      */
     public function index()
     {
-        // $designers = DB::table('users')
-        // ->join('designer_rates', 'designer_rates.designer_id', '=', 'users.id')
-        // ->select('designer_id','users.name','users.image', DB::raw('count(*) as total'))
-        // ->orderBy('total', 'desc') //order in descending order
-        // ->groupBy('designer_id')
-        // // ->take(10)//limit the images to Top 10 favorite images.
-        // // ->get();
-        // ->paginate(10);
         $designers = User::whereHas('profile', function($query) {
             $query->where('is_verified','=','accepted');})->where('role','designer')->orderBy('likes', 'DESC')->paginate(10);
-        // var_dump($designers);
         return view('designer.index', compact('designers'));
-        // return view('designer.designerslist',['designers'=>$designers]);
     }
 
     /**
@@ -88,7 +78,6 @@ class DesignerController extends Controller
         }
         $prev_works = Design::where(['designer_id'=>$id,'state'=>'sold'])->get();
         $prev_work_count = $prev_works->count();
-            //var_dump($prev_works);
         if($prev_work_count > 0 )
         {
             foreach($prev_works as $prev_work)
@@ -96,7 +85,6 @@ class DesignerController extends Controller
                 $prev_images = CompanyDesign::where('design_id',$prev_work->id)->get();
 
             }
-            //var_dump($prev_images);
         }
         else{
             $prev_images = null;

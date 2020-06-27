@@ -227,7 +227,7 @@
                             <li><a href="/design/category/teenagers">Teenagers</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">How it works</a></li>
+                <li><a href="/about">How it works</a></li>
                 </ul>
             </div>
         </nav>

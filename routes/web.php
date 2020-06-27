@@ -120,7 +120,9 @@ Route::resource('user','ProfileController')->only([
             Route::get('designers/chart/{id}', 'AdminController@designerChart')->name('designer.chart');
             Route::get('designs', 'AdminController@listDesigns')->name('designs.list');
             Route::get('designs/chart/{id}', 'AdminController@designChart')->name('design.chart');
+            Route::get('livesearch','AdminController@action')->name('livesearch');
 
     });
 });
+Route::view('/about', 'about');
 

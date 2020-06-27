@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 	@section('content')
 	<!-- product section -->
 	<section class="product-section">
@@ -107,10 +106,10 @@
 				@foreach($featured_images as $fimage)
 					<div class="col-lg-3 col-sm-6">
 						<div class="product-item" >
-							<a href="{{route('design.show', ['design'=>$fimage->design_id])}}"><img style="width:250px;height:300px;" src="{{asset ('storage/'.$fimage->image) }}" alt=""></a>
+							<a href="{{route('design.show', ['design'=>$fimage->design_id])}}"><img style="width:250px;height:300px;"class='featured_image'id =' {{$fimage->design->id}}' src="{{asset ('storage/'.$fimage->image) }}" alt=""></a>
 							@can('update',$designer_data)
 								@if($user->role == "designer"&& $fimage->design->featured )
-								<span class="glyphicon glyphicon-trash"id="{{$fimage->design_id}}"></span>
+								<span class="glyphicon glyphicon-trash"id ="{{$fimage->design->id}}"></span>
 								@endif
 							@endcan
 						</div>
@@ -132,8 +131,8 @@
 				{{-- @foreach($designs as $design) --}}
 			@foreach($current_images as $cimage)
 						<div class="product-item">
-						<div class="pi-pic">
-							<a href="{{route('design.show', ['design' => $cimage->design_id])}}"><img style="width:250px;height:300px;"src="{{asset ('storage/'.$cimage->image) }}" alt=""></a>
+						<div class="pi-pic current" id="{{$cimage->design_id}}" >
+							<a href="{{route('design.show', ['design' => $cimage->design_id])}}"><img class="current_designs" id="{{$cimage->design_id}}" style="width:250px;height:300px;"src="{{asset ('storage/'.$cimage->image) }}" alt=""></a>
 						</div>
 						</br>
 						@can('update',$designer_data)
@@ -176,7 +175,6 @@
 		</div>
 	</section>		
 	<!-- previous work section end -->
-
 	@empty
 	<div style="height:300px;margin:auto;">
 	<h3 style="text-align:center;color:navy;">This Designer Doesn't Exist</h3>
