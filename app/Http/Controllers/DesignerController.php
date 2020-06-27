@@ -43,19 +43,9 @@ class DesignerController extends Controller
      */
     public function index()
     {
-        // $designers = DB::table('users')
-        // ->join('designer_rates', 'designer_rates.designer_id', '=', 'users.id')
-        // ->select('designer_id','users.name','users.image', DB::raw('count(*) as total'))
-        // ->orderBy('total', 'desc') //order in descending order
-        // ->groupBy('designer_id')
-        // // ->take(10)//limit the images to Top 10 favorite images.
-        // // ->get();
-        // ->paginate(10);
         $designers = User::whereHas('profile', function($query) {
             $query->where('is_verified','=','accepted');})->where('role','designer')->orderBy('likes', 'DESC')->paginate(10);
-        // var_dump($designers);
         return view('designer.index', compact('designers'));
-        // return view('designer.designerslist',['designers'=>$designers]);
     }
 
     /**
@@ -87,21 +77,24 @@ class DesignerController extends Controller
         array_push($fimage_array, $featured_image[0]); 
         }
         $prev_works = Design::where(['designer_id'=>$id,'state'=>'sold'])->get();
-        $prev_work_count = $prev_works->count();
-            //var_dump($prev_works);
-        if($prev_work_count > 0 )
-        {
-            foreach($prev_works as $prev_work)
-            {
-                $prev_images = CompanyDesign::where('design_id',$prev_work->id)->get();
 
-            }
-            //var_dump($prev_images);
-        }
-        else{
-            $prev_images = null;
-        }            
-        return view('designer.profile',['designer'=>$designer,'user'=>$user,'vote_exist'=>$vote_exist,'design_count'=>$current_designs,'featured_images'=>$fimage_array,'current_images'=>$cimage_array,'likes'=>$likes_count,'about'=>$about,'prev_img'=>$prev_images,'prev_count'=>$prev_work_count,'designs'=>$designs]);       
+        $prev_work_count = $prev_works->count();
+
+        // if($prev_work_count > 0 )
+        // {
+
+        //     foreach($prev_works as $prev_work)
+        //     {
+        //         $prev_images = CompanyDesign::where('design_id',$prev_work->id)->get();
+                
+        //     }
+        //     dd($prev_images);
+        // }
+        // else{
+        //     $prev_images = null;
+        // }   
+
+        return view('designer.profile',['designer'=>$designer,'user'=>$user,'vote_exist'=>$vote_exist,'design_count'=>$current_designs,'featured_images'=>$fimage_array,'current_images'=>$cimage_array,'likes'=>$likes_count,'about'=>$about,'prev_works'=>$prev_works,'prev_count'=>$prev_work_count,'designs'=>$designs]);       
     }    
     /**
      * Remove the specified resource from storage.

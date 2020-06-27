@@ -305,6 +305,107 @@ class AdminController extends Controller
        }
        return response('failed',500);
     }
+
+    public function action(Request $request)
+    {
+        if($request->ajax()) //this condition will check if this method receive ajax request or not
+        {
+            $output = '';
+            $query = $request->get('query');
+            $state = $request->get('state');
+
+            if($query != '')
+            {
+                $data = DB::table("users")->join("profiles","users.id","=","profiles.user_id")
+                            ->where(["role"=>"designer","profiles.is_verified"=>$state])
+                            ->where("name" ,"like", "%".$query."%")
+                            ->orderBy("id","asc")
+                            ->select("users.id","name","email","website","image")->paginate(5);
+            }else
+            {
+                $data = DB::table("users")->join("profiles","users.id","=","profiles.user_id")
+                            ->where(["role"=>"designer","profiles.is_verified"=>$state])
+                            ->orderBy("id","asc")
+                            ->select("users.id","name","email","website","image")->paginate(5);
+            }
+            $total_data= $data->count();
+            if($total_data > 0)
+            {
+                foreach($data as $row)
+                {
+                    $output .='
+                        <tr>
+                            <td>'.$row->id.'</td>
+                            <td>'.$row->name.'</td>
+                            <td>'.$row->email.'</td>
+                            <td>'.$row->website.'</td>
+                            <td><img class="img-thumbnail" style="width: 300px; height:200px" src="/storage/'.$row->image.'"  alt="" srcset=""></td>
+                            <td><a target="_blank" href="/admin/user/document/'.$row->id.'" class="btn btn-success ">Preview Document</a></td>                
+                            ';
+                            if($state ==='rejected' || $state === 'pending' )
+                            { $output .='
+                                    <td class="align-middle">
+                                        <button type="button" class="btn btn-primary" onclick=change_verification(this,'.$row->id.',"accepted")>Accept</button>
+                                    </td>
+                                    ';
+                            }
+                            if($state === 'accepted' || $state === 'pending')
+                            { $output .='
+                                <td class="align-middle">
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#RejectionModal'. $row->id .'" id="'. $row->id .'" >Reject</button>
+                                    </td>
+                            ';
+                            }
+                            $output .='</tr>
+            <div class="modal fade" id="RejectionModal'. $row->id .'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Profile Confirmation </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                               
+                        <div class="modal-body">
+                            <div class="alert alert-danger" style="display:none"></div>
+                            <form class="form-horizontal" role="form"  method="post" action="#">
+                                @csrf
+                                            
+                                <input type="text" placeholder="To" name="To" value="'. $row->email.'" class="form-control  reciever'.$row->id.'" autofocus>
+                                <input type="text" placeholder="Subject" name="Subject"  class="form-control mt-2 Subject'.$row->id.'" autofocus>
+                                <input type="hidden" value="{{$user->id}}" id="user_id">
+                                <textarea  name="Message" placeholder="Message" class="form-control mb-2 mt-2 Message'.$row->id.'" rows="4" cols="50" autofocus></textarea>
+                                              
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" type="submit" onclick="change_verification($("#'. $row->id .'"),'.$row->id.',"rejected")" >Send</button>
+                                </div>
+                             </form>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+
+                            ';
+                }
+            }
+            else 
+            {
+                $output .='
+                        <tr>
+                            <td align="center" colspan="7">No Data Found</td>
+                        </tr>
+                ';
+            } 
+            $data = array(
+                'table_data' => $output,
+                'total_data' => $total_data
+            );
+            echo json_encode($data);
+
+        }       
+    }
     /**
      * Display a listing of the resource.
      *

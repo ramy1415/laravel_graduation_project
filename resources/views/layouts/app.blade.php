@@ -10,6 +10,7 @@
         <title>MY DESIGN</title>
         
         <!-- Scripts -->
+          @stack('my_style')
         <script src="{{ asset('js/app.js') }}" defer></script>
     {{-- login    --}}
     <link rel="stylesheet" type="text/css" href="{{ asset('css/util.css') }}">
@@ -36,7 +37,7 @@
     <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/animate.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}"/>
-    @stack('my_style')        
+          
     <style type="text/css">
         #Notifications::after {
             content: none;
@@ -233,7 +234,7 @@
                             <li><a href="/design/category/teenagers">Teenagers</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">How it works</a></li>
+                <li><a href="/about">How it works</a></li>
                 </ul>
             </div>
         </nav>
