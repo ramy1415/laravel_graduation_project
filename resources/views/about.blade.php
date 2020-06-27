@@ -1,10 +1,11 @@
 
 	@extends('layouts.app')
-	@section('styles')
-		
+
+
+@section('styles')		
 	
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Prata&display=swap" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Prata&display=swap" rel="stylesheet"> -->
 
     <link rel="stylesheet" href="{{ asset('css/Tcss/open-iconic-bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/Tcss/animate.css') }}">
@@ -25,8 +26,7 @@
     <link rel="stylesheet" href="{{ asset('css/Tcss/icomoon.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/Tcss/style.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/fonts/font/flaticon.css') }}"/>
-	@endsection
-
+@endsection
 @section('content')
 <section class="ftco-section ftco-no-pt ftco-no-pb" style="margin-bottom:15px;">
 	<div class="container">
@@ -234,8 +234,8 @@
 	<script src="{{ asset('js/templatejs/bootstrap-datepicker.js') }}"></script>
 	<script src="{{ asset('js/templatejs/jquery.timepicker.min.js') }}"></script>
 	<script src="{{ asset('js/templatejs/scrollax.min.js') }}"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-	<script src="{{ asset('js/templatejs/google-map.js') }}"></script>
+	<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script> -->
+	<!-- <script src="{{ asset('js/templatejs/google-map.js') }}"></script> -->
 	<script src="{{ asset('js/templatejs/main.js') }}"></script>
   @endpush
 

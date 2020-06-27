@@ -11,23 +11,24 @@
         
         <!-- Scripts -->
           @stack('my_style')
+          
         <script src="{{ asset('js/app.js') }}" defer></script>
     {{-- login    --}}
     <link rel="stylesheet" type="text/css" href="{{ asset('css/util.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}">
     {{-- end of login --}}
-    
+     
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
+    @yield('styles')
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
 
     <!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet"> -->
-
+    
     <!-- Stylesheets -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}"/>
@@ -50,7 +51,7 @@
             background-color:lightgray;
         }
     </style>
-
+    
     <script type="text/javascript">
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
@@ -64,7 +65,7 @@
     </script>
 
     @endif
-    @yield('styles')
+   
      
 
 
