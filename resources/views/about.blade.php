@@ -25,6 +25,9 @@
     <link rel="stylesheet" href="{{ asset('css/Tcss/icomoon.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/Tcss/style.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/fonts/font/flaticon.css') }}"/>
+	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+
 	@endsection
 
 @section('content')

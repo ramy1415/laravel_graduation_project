@@ -375,7 +375,7 @@ class AdminController extends Controller
                                             
                                 <input type="text" placeholder="To" name="To" value="'. $row->email.'" class="form-control  reciever'.$row->id.'" autofocus>
                                 <input type="text" placeholder="Subject" name="Subject"  class="form-control mt-2 Subject'.$row->id.'" autofocus>
-                                <input type="hidden" value="{{$user->id}}" id="user_id">
+                                <input type="hidden" value="'.$row->id.'" id="user_id">
                                 <textarea  name="Message" placeholder="Message" class="form-control mb-2 mt-2 Message'.$row->id.'" rows="4" cols="50" autofocus></textarea>
                                               
                                 <div class="modal-footer">
